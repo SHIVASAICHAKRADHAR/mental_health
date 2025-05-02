@@ -1,40 +1,41 @@
 import streamlit as st
 from model_utils import predict_emotion
-import tempfile
 import os
+import tempfile
 
 st.set_page_config(page_title="Mental Health Detector", layout="centered")
 
 st.title("🧠 Mental Health Detection from Voice + Text")
-st.markdown("Analyze your **emotions** through text and voice input.")
+st.markdown("This app predicts your emotional state using both your speech and a short text description.")
 
-st.markdown("### 💬 Enter a short sentence about how you're feeling:")
-user_text = st.text_input("Example: 'I'm feeling a bit anxious today.'")
+# Text Input
+user_text = st.text_input("💬 How are you feeling today? (Text input)")
 
-st.markdown("### 🎤 Upload your voice clip (.wav format):")
-uploaded_file = st.file_uploader("Choose an audio file", type=["wav","mp4","m4a"])
+# Audio Input
+uploaded_audio = st.file_uploader("🎤 Upload your voice clip (WAV only)", type=["wav"])
 
+# Prediction
 if st.button("🔍 Analyze"):
-    if not user_text or not uploaded_file:
+    if not user_text or not uploaded_audio:
         st.warning("Please provide both text and audio input.")
     else:
-        # Save uploaded audio to a temp file
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp_file:
-            tmp_file.write(uploaded_file.read())
-            audio_path = tmp_file.name
-
-        # Predict emotion
         with st.spinner("Analyzing..."):
-            label, confidence = predict_emotion(user_text, audio_path)
+            # Save uploaded audio to a temp file
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp_audio:
+                tmp_audio.write(uploaded_audio.read())
+                tmp_audio_path = tmp_audio.name
 
-        # Display results
-        st.success(f"🧠 **Predicted Emotion:** `{label}`")
-        st.info(f"📊 **Confidence:** `{confidence:.2f}`")
+            # Predict
+            try:
+                label, confidence = predict_emotion(user_text, tmp_audio_path)
+                st.success(f"🧠 Predicted Emotion: **{label}**")
+                st.progress(min(int(confidence * 100), 100))
+                st.write(f"📊 Confidence Score: `{confidence:.2f}`")
+            except Exception as e:
+                st.error(f"Error: {e}")
 
-        # Optional: Color-coded emotion box
-        st.markdown("### 🎨 Emotion Indicator")
-        st.markdown(f"<div style='padding:1rem; background-color:#e0f7fa; border-radius:10px;'>You seem to be feeling <strong>{label}</strong>.</div>", unsafe_allow_html=True)
+            # Clean up temp file
+            os.remove(tmp_audio_path)
 
-        # Clean up temp file
-        os.remove(audio_path)
-
+st.markdown("---")
+st.caption("Built with 💙 using Streamlit, TensorFlow, and Librosa")
