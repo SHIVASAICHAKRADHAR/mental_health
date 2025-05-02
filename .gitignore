@@ -1,0 +1,30 @@
+# Python-specific
+*.pyc
+__pycache__
+
+# Jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# Virtual environment (if you use one)
+venv/
+env/
+
+# Model files
+*.h5
+*.pkl
+
+# Streamlit config and logs
+*.log
+
+# OS-specific
+.DS_Store        # macOS
+Thumbs.db        # Windows
+
+# Audio files (if you don't want to track large audio files)
+*.wav
+*.mp4
+*.m4a
+
+# Temporary files
+*.tmp
+*.swp
