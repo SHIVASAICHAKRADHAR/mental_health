@@ -5,11 +5,11 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 # Load models and encoders
-text_model = load_model("text_model.h5")
-audio_model = load_model("audio_model.h5")
-tokenizer = joblib.load("tokenizer.pkl")
-text_encoder = joblib.load("label_encoder_text.pkl")
-audio_encoder = joblib.load("label_encoder_audio.pkl")
+text_model = load_model("models/text_model.h5")
+audio_model = load_model("models/audio_model.h5")
+tokenizer = joblib.load("artifacts/tokenizer.pkl")
+text_encoder = joblib.load("artifacts/label_encoder_text.pkl")
+audio_encoder = joblib.load("artifacts/label_encoder_audio.pkl")
 
 # ⚠️ Assumption: text_encoder and audio_encoder use the same label set and order
 
