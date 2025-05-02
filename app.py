@@ -43,7 +43,7 @@ if st.button("🔍 Analyze"):
                 except Exception as e:
                     st.error(f"Audio conversion failed: {e}")
                     os.remove(temp_input.name)
-                    return
+                    audio_path = None
                 os.remove(temp_input.name)
 
         # Run prediction
