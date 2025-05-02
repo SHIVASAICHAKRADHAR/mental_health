@@ -1,12 +1,9 @@
 streamlit
 tensorflow
 scikit-learn
-pandas
-numpy
 librosa
-pydub
+numpy
+pandas
 joblib
-matplotlib
-ffmpeg-python
-streamlit-audiorecorder
+
 
