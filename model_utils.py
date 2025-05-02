@@ -9,11 +9,11 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 
 # Load models and artifacts
-text_model = load_model("/models/text_model.h5")
-audio_model = load_model("/models/audio_model.h5")
-tokenizer = joblib.load("/artifacts/tokenizer.pkl")
-text_encoder = joblib.load("/artifacts/label_encoder_text.pkl")
-audio_encoder = joblib.load("/artifacts/label_encoder_audio.pkl")
+text_model = load_model("models/text_model.h5")
+audio_model = load_model("models/audio_model.h5")
+tokenizer = joblib.load("artifacts/tokenizer.pkl")
+text_encoder = joblib.load("artifacts/label_encoder_text.pkl")
+audio_encoder = joblib.load("artifacts/label_encoder_audio.pkl")
 
 # ⚠️ Ensure both encoders are trained on the same class set.
 # Use text_encoder.classes_ to map back to final labels.
