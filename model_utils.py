@@ -22,24 +22,22 @@ def preprocess_text(text):
     return padded  # Shape: (1, 100)
 
 def preprocess_audio(audio_path):
-    """
-    Load audio and extract MFCC features for CNN model input.
-    """
-    max_pad_len = 174  # Ensure same as used during training
     audio, sr = librosa.load(audio_path, sr=None)
     mfcc = librosa.feature.mfcc(y=audio, sr=sr, n_mfcc=13)
 
-    # Pad or truncate
-    if mfcc.shape[1] < max_pad_len:
-        pad_width = max_pad_len - mfcc.shape[1]
-        mfcc = np.pad(mfcc, pad_width=((0, 0), (0, pad_width)), mode='constant')
-    else:
-        mfcc = mfcc[:, :max_pad_len]
+    # Transpose to shape (time_steps, features)
+    mfcc = mfcc.T
 
-    mfcc = mfcc.T  # Shape: (174, 13)
-    mfcc = np.expand_dims(mfcc, axis=-1)  # Add channel: (174, 13, 1)
-    mfcc = np.expand_dims(mfcc, axis=0)   # Add batch: (1, 174, 13, 1)
-    return mfcc
+    # Pad or trim to fixed length (e.g., 500 time steps)
+    desired_length = 500
+    if mfcc.shape[0] > desired_length:
+        mfcc = mfcc[:desired_length, :]
+    else:
+        mfcc = np.pad(mfcc, ((0, desired_length - mfcc.shape[0]), (0, 0)), mode='constant')
+
+    # Final shape: (1, time_steps, features)
+    return np.expand_dims(mfcc, axis=0)
+
 
 def predict_emotion(text_input, audio_path):
     """
