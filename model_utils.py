@@ -6,11 +6,11 @@ from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 # Load models and artifacts
-text_model = load_model("/content/text_model.h5")  # Update path as needed
-audio_model = load_model("/content/audio_model.h5")  # Update path as needed
-tokenizer = joblib.load("/content/tokenizer.pkl")  # Update path as needed
-text_encoder = joblib.load("/content/label_encoder_text.pkl")  # Update path as needed
-audio_encoder = joblib.load("/content/label_encoder_audio.pkl")  # Update path as needed
+text_model = load_model("models/text_model.h5")  # Update path as needed
+audio_model = load_model("models/audio_model.h5")  # Update path as needed
+tokenizer = joblib.load("artifacts/tokenizer.pkl")  # Update path as needed
+text_encoder = joblib.load("artifacts/label_encoder_text.pkl")  # Update path as needed
+audio_encoder = joblib.load("artifacts/label_encoder_audio.pkl")  # Update path as needed
 
 def preprocess_text(text):
     seq = tokenizer.texts_to_sequences([text])
