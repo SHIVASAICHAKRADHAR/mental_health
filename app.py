@@ -17,9 +17,9 @@ st.markdown("### 🎤 Upload a voice file (.wav, .mp4, .m4a) (optional):")
 uploaded_file = st.file_uploader("Choose an audio file", type=["wav", "mp4", "m4a"])
 
 # Voice recording (optional component)
-# from streamlit_audiorecorder import audiorecorder
-# audio_bytes = audiorecorder("Click to record", "Recording...")
-# You can implement this with a compatible plugin if needed.
+from streamlit_audiorecorder import audiorecorder
+audio_bytes = audiorecorder("Click to record", "Recording...")
+#You can implement this with a compatible plugin if needed.
 
 if st.button("🔍 Analyze"):
     if not user_text and not uploaded_file:
