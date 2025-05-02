@@ -8,4 +8,5 @@ pydub
 joblib
 matplotlib
 ffmpeg-python
+streamlit-audiorecorder
 
